@@ -60,7 +60,7 @@ def calculate_optical_flow(cap, oldFrameGray, old_corners, centroid_old_row, cen
             new_corners_updated = new_corners.copy()
             tobedel = []
             for index in range(len(new_corners)):
-                    if findDistance(new_corners[index][0][1], new_corners[index][0][0], int(centroid_row), int(centroid_col)) > 90:
+                    if findDistance(new_corners[index][0][1], new_corners[index][0][0], int(centroid_row), int(centroid_col)) > 60:
                             tobedel.append(index)
             new_corners_updated = np.delete(new_corners_updated,tobedel,0)
 
@@ -73,8 +73,6 @@ def calculate_optical_flow(cap, oldFrameGray, old_corners, centroid_old_row, cen
 
             c1 += 1
             if flag==1 or c1==25:
-                print c1
-                print "FLAG:{}".format(flag)
                 if c1>1:
                     final_speed = (ans*20)/(c1-1)
                     print "The average speed of the car was {} pixels per second".format(final_speed)
@@ -174,74 +172,5 @@ while True:
             cap.release()
         elif a == 97:
             break
-
-#   #Actual Tracking
-#   while True:
-#       #Now we have oldFrame, we can get new_frame, we have old corners and we can get new corners and update accordingly
-#       flag=0
-
-#         #read new frame and cvt to gray
-#       ret,frame = cap.read()
-#       frameGray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-#         #finding the new tracked points
-#       new_corners, st, err = cv2.calcOpticalFlowPyrLK(oldFrameGray, frameGray, old_corners, None, **lk_params)
-
-#       # ---pruning far away points:
-#       # first finding centroid
-#       r_add, c_add = 0,0
-#       for corner in new_corners:
-#           r_add = r_add + corner[0][1]
-#           c_add = c_add + corner[0][0]
-#       centroid_row = int(1.0*r_add/len(new_corners))
-#       centroid_col = int(1.0*c_add/len(new_corners))
-
-#         # draw centroid
-#       cv2.circle(frame, (int(centroid_col), int(centroid_row)), 5, (255,0,0))
-
-#         # add only those corners to new_corners_updated which are at a distance of 30 or lesser
-#       new_corners_updated = new_corners.copy()
-#       tobedel = []
-#       for index in range(len(new_corners)):
-#           if findDistance(new_corners[index][0][1], new_corners[index][0][0], int(centroid_row), int(centroid_col)) > 90:
-#               tobedel.append(index)
-#       new_corners_updated = np.delete(new_corners_updated,tobedel,0)
-
-#       # drawing the new points
-#       for corner in new_corners_updated:
-#           cv2.circle(frame, (int(corner[0][0]),int(corner[0][1])), 5, (0, 255, 0))
-#           if  int(corner[0][0])>319:
-#               flag = 1
-#               break
-
-#       c1 += 1
-#       if len(new_corners_updated)<10 or flag==1 or c1==25:
-#           break
-
-#       ans += findDistance(centroid_old_col, centroid_old_row, centroid_col, centroid_row)
-
-#       # finding the min enclosing circle
-#       ctr , rad = cv2.minEnclosingCircle(new_corners_updated)
-
-#       cv2.circle(frame, (int(ctr[0]), int(ctr[1])), int(rad), (0, 0, 255), thickness = 5)
-
-#       # updating old_corners and oldFrameGray
-#       oldFrameGray = frameGray.copy()
-#       old_corners = new_corners_updated.copy()
-#       centroid_old_row = centroid_row
-#       centroid_old_col = centroid_col
-
-
-#       cv2.imshow('tracker', frame)
-
-#       a = cv2.waitKey(50)
-#       if a== 27:
-#           cv2.destroyAllWindows()
-#           cap.release()
-#       elif a == 97:
-#           break
-#         if c1>1:
-#             final_speed = (ans*20)/(c1-1)
-#             print "The average speed of the car was {} pixels per second".format(final_speed)
 
 cv2.destroyAllWindows()
