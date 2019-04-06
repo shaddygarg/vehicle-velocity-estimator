@@ -21,7 +21,7 @@ def findDistance(r1,c1,r2,c2):
 
 cv2.namedWindow('tracker')
 
-cap = cv2.VideoCapture('output.avi')
+cap = cv2.VideoCapture(gV.video_path)
 
 fgbg = cv2.createBackgroundSubtractorKNN()
 
@@ -147,7 +147,8 @@ while True:
 			cap.release()
 		elif a == 97:
 			break
-	final_speed = (ans*20)/(c1-1)
-	print "The average speed of the car was {} pixels per second".format(final_speed)
+        if c1>1:
+            final_speed = (ans*20)/(c1-1)
+            print "The average speed of the car was {} pixels per second".format(final_speed)
 
 cv2.destroyAllWindows()

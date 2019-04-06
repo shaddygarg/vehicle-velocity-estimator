@@ -3,3 +3,4 @@ initial = 0
 top_left= [160,213]
 bottom_right = [320,426]
 first_time = 1
+video_path = 'output.avi'
