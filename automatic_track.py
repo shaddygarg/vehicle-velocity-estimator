@@ -111,13 +111,14 @@ def code():
             fgmask = fgbg.apply(frame)
 
             cv2.imshow('frame',fgmask)
+            cv2.imshow('tracker',frame)
 
-            # Tracking whether a white pixel occurs reoeatedly in 4 frames in the middle of the tracking box
-            if int(fgmask[40,80]) > 125:
+            # Tracking whether a white pixel occurs repeatedly in 4 frames in the middle of the tracking box
+            if int(fgmask[(global_variables.top_left[0]+global_variables.bottom_right[0])/2, (global_variables.top_left[1]+global_variables.bottom_right[1])/2]) > 125:
                 c+=1
                 if c>4:
                     calculate_optical_flow(cap, old_gray_frame, old_corners, centroid_old_row, centroid_old_col, c1, ans)
-            elif int(fgmask[130,80]) > 125:
+            elif int(fgmask[(global_variables.top_left2[0]+global_variables.bottom_right2[0])/2, (global_variables.top_left2[1]+global_variables.bottom_right2[1])/2]) > 125:
                 c2+=1
                 if c2>4:
                     calculate_optical_flow(cap, old_gray_frame2, old_corners2, centroid_old_row2, centroid_old_col2, c1, ans) 
@@ -160,7 +161,6 @@ def code():
             centroid_old_row2 = int(1.0*row_sum2/len(new_corners2))
             centroid_old_col2 = int(1.0*column_sum2/len(new_corners2))
 
-            cv2.imshow('tracker',frame)
 
             # Exit on `ESC` key and 
             a = cv2.waitKey(50)
