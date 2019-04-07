@@ -147,6 +147,7 @@ while True:
 			cap.release()
 		elif a == 97:
 			break
-	print "The average speed of the car was {}".format(ans/c1-1)
+	final_speed = (ans*20)/(c1-1)
+	print "The average speed of the car was {} pixels per second".format(final_speed)
 
 cv2.destroyAllWindows()
