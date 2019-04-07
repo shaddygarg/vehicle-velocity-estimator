@@ -1,9 +1,14 @@
 # vehicle-velocity-estimator
-This projects aims to estimate the velocity of vehicles moving on road from the CCTV footage of the road.
+This projects aims to estimate the velocity of vehicles moving on road from the CCTV footage of the road. 
+
+The implementation uses Lucas Kanade algorithm along with Optical Flow for generating a set of good points and tracking then for estimating the velocity of the moving object. Background removal using KNN algorithm is used for instantiating the tracking process whenever a new object is detected.
 
 ## Requirements
 * OpenCV2
 > sudo apt-get install python-opencv
+* Python2.x
+* numpy
+> sudo pip install numpy
 
 ## Instructions to run the code
 * Inside `global_variables.py` replace `video_path` with the path of your video
